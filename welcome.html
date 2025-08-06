@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(-45deg, #fcb69f, #ffdde1, #e0c3fc, #8ec5fc);
+      background-size: 400% 400%;
+      animation: gradientFlow 10s ease infinite;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .welcome-box {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 50px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      animation: fadeInUp 1.5s ease-out;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+      color: #ff1493;
+      animation: glowText 2s ease-in-out infinite alternate;
+    }
+
+    .logout {
+      padding: 12px 25px;
+      background-color: #00c896;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.3s ease;
+    }
+
+    .logout:hover {
+      background-color: #009e78;
+    }
+
+    /* Background animation */
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Text glow */
+    @keyframes glowText {
+      from {
+        text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4;
+      }
+      to {
+        text-shadow: 0 0 20px #ff1493, 0 0 30px #ff1493;
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Confetti particles */
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: gold;
+      animation: fall 3s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10vh) rotate(0deg);
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Confetti elements -->
+  <script>
+    for (let i = 0; i < 30; i++) {
+      const confetti = document.createElement('div');
+      confetti.className = 'confetti';
+      confetti.style.left = Math.random() * 100 + 'vw';
+      confetti.style.backgroundColor = ['#fcd34d', '#f87171', '#a78bfa', '#34d399'][Math.floor(Math.random() * 4)];
+      confetti.style.animationDuration = (Math.random() * 2 + 3) + 's';
+      confetti.style.width = confetti.style.height = Math.random() * 8 + 4 + 'px';
+      document.body.appendChild(confetti);
+    }
+  </script>
+
+  <div class="welcome-box">
+    <h1 id="welcomeMessage">Welcome!</h1>
+    <button class="logout" onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    const username = localStorage.getItem("loggedInUser");
+    if (username) {
+      document.getElementById("welcomeMessage").textContent = `Welcome, ${username}! 🎉`;
+    } else {
+      alert("You're not logged in!");
+      window.location.href = "login.html";
+    }
+
+    function logout() {
+      localStorage.removeItem("loggedInUser");
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>
